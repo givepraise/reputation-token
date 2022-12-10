@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity 0.8.17;
 
 contract Controlled {
     /// @notice The address of the controller is the only address that can call
@@ -7,7 +7,7 @@ contract Controlled {
 
     address public controller;
 
-    function Controlled() public { controller = msg.sender;}
+    constructor() { controller = msg.sender; }
 
     /// @notice Changes the controller of the contract
     /// @param _newController The new controller of the contract
