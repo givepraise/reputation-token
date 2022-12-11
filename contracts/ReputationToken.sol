@@ -34,6 +34,7 @@ contract ReputationToken is MiniMeToken {
         uint8 _decimalUnits,
         bool _transfersEnabled,
         bool _burnable,
+        address _controller,
         address _tokenFactory,
         address payable _parentToken,
         uint _parentSnapShotBlock
@@ -49,13 +50,14 @@ contract ReputationToken is MiniMeToken {
         )
     {
         burnable = _burnable;
+        controller = _controller;
     }
 
     /// @notice Mint tokens to a list of recipients
     /// @param _recipients Array of Recipient structs
     function mintMany(Recipient[] memory _recipients) external onlyController {
-      uint256 length = _recipients.length;
-        for (uint256 i = 0; i < length;) {
+        uint256 length = _recipients.length;
+        for (uint256 i = 0; i < length; ) {
             _mint(_recipients[i].recipient, _recipients[i].amount);
             unchecked {
                 i++;
@@ -67,15 +69,20 @@ contract ReputationToken is MiniMeToken {
     /// @param _account Address of the account to burn tokens from
     /// @param _amount Amount of tokens to burn
     /// @return True if successful
-    function burn(address _account, uint256 _amount) external override onlyController returns(bool) {
+    function burn(
+        address _account,
+        uint256 _amount
+    ) external override onlyController returns (bool) {
         require(burnable, "ReputationToken: not burnable");
         return _burn(_account, _amount);
     }
 
     /// @notice Enable or disable transfers
     /// @param _transferEnabled True if transfers should be enabled
-    function enableTransfers(bool _transferEnabled) external override onlyController {
-        transfersEnabled = _transferEnabled;  
+    function enableTransfers(
+        bool _transferEnabled
+    ) external override onlyController {
+        transfersEnabled = _transferEnabled;
         emit EnableTransfers(_transferEnabled);
     }
 
