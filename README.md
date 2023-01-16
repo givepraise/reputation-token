@@ -1,13 +1,25 @@
-# Sample Hardhat Project
+# Reputation Token and Token Factory
+The TokenFactory contract has one non-restricted function `create` to create new ReputationToken contracts. 
+To create a new token you have to pass the following parameter:
+```
+string memory _name,    // The name of the token
+string memory _symbol,  // The symbol of the token
+uint8 _decimals,        // The number of decimals of the token
+address _owner,         // The owner of the token
+bool _transferable      // Whether the token is transferable
+bool _burnable          // Whether the token is burnable
+```
+The ReputationToken itself is based on OpenZeppelins ERC20Vote extension. The constructor takes the same parameters described above. Beside the general token functions, mint, checkpoints, delegation and permit are also transfer and burn locks implemented.
+The transfer lock can be enabled and disabled by the owner at any time. The burn lock is set in constructor and can't be changed afterwards.
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+# Installation
+To install all dependencies, please run:
+```
+npm install
+```
 
-Try running some of the following tasks:
-
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
+# Test
+You can run all test cases with the following comment:
+```
+npm test
 ```

@@ -16,7 +16,8 @@ describe("Reputation", function () {
     }
 
     const ReputationToken = await ethers.getContractFactory("ReputationToken");
-    const reputationToken = await ReputationToken.deploy(
+    const reputationToken = await ReputationToken.deploy();
+    await reputationToken.initialize(
       tokenData._name,
       tokenData._symbol,
       tokenData._decimals,
@@ -30,6 +31,7 @@ describe("Reputation", function () {
 
     const TokenFactory = await ethers.getContractFactory("ReputationTokenFactory");
     const tokenFactory = await TokenFactory.deploy();
+    await tokenFactory.initialize(owner.address);
 
     return { reputationToken, tokenFactory, owner, other, tokenData };
   }
@@ -50,7 +52,7 @@ describe("Reputation", function () {
       ).to.emit(tokenFactory, "TokenCreated").withArgs(owner.address, 1);
     });
 
-    it("Should habe the correct parameters", async function () {
+    it("Should have the correct parameters", async function () {
       const { tokenFactory, owner, tokenData } = await loadFixture(deployFixture);
 
       const tx = await tokenFactory.create(
@@ -62,7 +64,8 @@ describe("Reputation", function () {
         false
       );
 
-      const tkn = (await tx.wait())?.events?.[2].args?.token;
+      const tkn = (await tx.wait())?.events?.[0].args?.token;
+      console.log(tkn)
       const reputationToken = await ethers.getContractAt("ReputationToken", tkn);
 
       expect(await reputationToken.name()).to.equal(tokenData._name);
@@ -255,7 +258,7 @@ describe("Reputation", function () {
         false
       );
 
-      const tkn = (await tx.wait())?.events?.[2].args?.token;
+      const tkn = (await tx.wait())?.events?.[0].args?.token;
       const reputationToken = await ethers.getContractAt("ReputationToken", tkn);
 
       await expect(
