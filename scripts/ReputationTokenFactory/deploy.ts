@@ -13,12 +13,16 @@ async function main() {
 
   await reputationContractFactory.deployed();
 
-  // Wait for block confirmations to confirm the deployment
-  // and verify on Etherscan
-  const WAIT_BLOCK_CONFIRMATIONS = 6;
-  await reputationContractFactory.deployTransaction.wait(
-    WAIT_BLOCK_CONFIRMATIONS
-  );
+  await reputationContractFactory.initialize(deployer.address);
+
+  if (network.config.chainId !== 31337) {
+    // Wait for block confirmations to confirm the deployment
+    // and verify on Etherscan
+    const WAIT_BLOCK_CONFIRMATIONS = 6;
+    await reputationContractFactory.deployTransaction.wait(
+      WAIT_BLOCK_CONFIRMATIONS
+    );
+  }
 
   console.log(
     `Reputation Contract Factory successfully deployed to ${reputationContractFactory.address}`
