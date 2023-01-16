@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
+import {OwnableUpgradeable as Ownable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import {ERC20Upgradeable as ERC20} from "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/draft-ERC20PermitUpgradeable.sol";
+import {ERC20VotesUpgradeable as ERC20Votes} from "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+
 
 /// @title ReputationToken
 /// @author Kurt
@@ -20,21 +22,26 @@ contract ReputationToken is ERC20, ERC20Votes, Ownable {
         uint256 amount;
     }
 
-    /// @notice Constructor for the ReputationToken contract
+    /// @notice Initializer for the ReputationToken contract
     /// @param _name The name of the token
     /// @param _symbol The symbol of the token
     /// @param _decimals The number of decimals of the token
     /// @param _owner The owner of the token
     /// @param _transferable Whether the token is transferable
     /// @param _burnable Whether the token is burnable
-    constructor(
+
+    function initialize(
         string memory _name,
         string memory _symbol,
         uint8 _decimals,
         address _owner,
         bool _transferable,
         bool _burnable
-    ) ERC20(_name, _symbol) ERC20Permit(_name) {
+    ) public initializer {
+        __ERC20_init(_name, _symbol);
+        __ERC20Permit_init(_name);
+        __ERC20Votes_init();
+        __Ownable_init();
         transferable = _transferable;
         burnable = _burnable;
         dec = _decimals;
