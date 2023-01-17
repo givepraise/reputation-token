@@ -1,5 +1,28 @@
 {
-  "name": "hardhat-project",
+  "name": "@givepraise/reputation-token",
+  "version": "1.0.0",
+  "description": "Contracts for reputation tokens to be distributed accordingly to the community quantification of Praise.",
+  "files": [
+    "/contracts/ReputationToken.sol",
+    "/out/ReputationToken.sol/ReputationToken.json",
+    "/contracts/ReputationTokenFactory.sol",
+    "/out/ReputationTokenFactory.sol/ReputationTokenFactory.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/givepraise/reputation-token.git"
+  },
+  "keywords": [
+    "erc20",
+    "erc-20",
+    "ethereum"
+  ],
+  "author": "givepraise",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/givepraise/reputation-token/issues"
+  },
+  "homepage": "https://github.com/givepraise/reputation-token#readme",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
     "hardhat": "^2.12.4",
