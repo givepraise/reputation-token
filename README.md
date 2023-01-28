@@ -6,22 +6,22 @@
     - [Minting Tokens](#minting-tokens)
     - [Setting Transferability](#setting-transferability)
   - [Methods](#methods)
-    - [`initialize(string memory _name, string memory _symbol, uint8 _decimals, address _owner, bool _transferable, bool _burnable)`](#initializestring-memory-_name-string-memory-_symbol-uint8-_decimals-address-_owner-bool-_transferable-bool-_burnable)
-    - [`burn(address _account, uint256 _amount)`](#burnaddress-_account-uint256-_amount)
-    - [`mint(address _account, uint256 _amount)`](#mintaddress-_account-uint256-_amount)
-    - [`mintMany(MintData[] memory _data)`](#mintmanymintdata-memory-_data)
-    - [`setTransferable(bool _flag)`](#settransferablebool-_flag)
+    - [initialize](#initialize)
+    - [burn](#burn)
+    - [mint](#mint)
+    - [mintMany](#mintmany)
+    - [setTransferable](#settransferable)
   - [Events](#events)
-    - [`TransferableSet(bool _flag)`](#transferablesetbool-_flag)
+    - [TransferableSet](#transferableset)
   - [Thrown Errors](#thrown-errors)
 - [ReputationTokenFactory](#reputationtokenfactory)
   - [Methods](#methods-1)
-    - [`initialize(address _owner)`](#initializeaddress-_owner)
-    - [`createToken(string memory _name, string memory _symbol, uint8 _decimals, bool _transferable, bool _burnable)`](#createtokenstring-memory-_name-string-memory-_symbol-uint8-_decimals-bool-_transferable-bool-_burnable)
-    - [`updateTokenImplementation(address _tokenImplementation)`](#updatetokenimplementationaddress-_tokenimplementation)
+    - [initialize](#initialize-1)
+    - [createToken](#createtoken)
+    - [updateTokenImplementation](#updatetokenimplementation)
   - [Events](#events-1)
-    - [`event TokenCreated(address _token)`](#event-tokencreatedaddress-_token)
-    - [`event TokenImplementationUpdated(address indexed tokenImplementation`](#event-tokenimplementationupdatedaddress-indexed-tokenimplementation)
+    - [event TokenCreated(address \_token)](#event-tokencreatedaddress-_token)
+    - [event TokenImplementationUpdated](#event-tokenimplementationupdated)
 
 # ReputationToken
 This contract is a ERC20Votes token with additional functionality. The Owner can burn tokens, if burnable is true and mint tokens. The Owner can also set whether the token is transferable or not.
@@ -44,29 +44,29 @@ The `setTransferable` function allows the owner of the contract to set whether t
 
 
 ## Methods
-### `initialize(string memory _name, string memory _symbol, uint8 _decimals, address _owner, bool _transferable, bool _burnable)`
+### initialize
 Initializer for the ReputationToken contract.
 
-- `_name`: The name of the token.
-- `_symbol`: The symbol of the token.
-- `_decimals`: The number of decimals of the token.
-- `_owner`: The owner of the token.
-- `_transferable`: Whether the token is transferable.
-- `_burnable`: Whether the token is burnable.
+- `_name:string`: The name of the token.
+- `_symbol:string`: The symbol of the token.
+- `_decimals:uint256`: The number of decimals of the token.
+- `_owner:address`: The owner of the token.
+- `_transferable:bool`: Whether the token is transferable.
+- `_burnable:bool`: Whether the token is burnable.
 
-### `burn(address _account, uint256 _amount)`
+### burn
 Burns tokens from the specified account. Can only be called by owner when burnable is set to true.
 
-- `_account`: The account to burn tokens from.
-- `_amount`: The amount of tokens to burn.
+- `_account:address`: The account to burn tokens from.
+- `_amount:uint256`: The amount of tokens to burn.
 
-### `mint(address _account, uint256 _amount)`
+### mint
 Mints tokens to a specified account. Can only be called by owner.
 
-- `_account`: The account to mint tokens to.
-- `_amount`: The amount of tokens to mint.
+- `_account:address`: The account to mint tokens to.
+- `_amount:uint256`: The amount of tokens to mint.
 
-### `mintMany(MintData[] memory _data)`
+### mintMany
 Mints tokens to multiple accounts. Can only be called by owner.
   ```
   struct MintData {
@@ -75,17 +75,16 @@ Mints tokens to multiple accounts. Can only be called by owner.
   }
   ```
 
-- `_data`: The data to mint tokens to multiple accounts.
+- `_data:MintData[]`: The data to mint tokens to multiple accounts.
 
-### `setTransferable(bool _flag)`
+### setTransferable
 Sets whether the token is burnable or not.
 
-`_flag`: Whether the token is burnable or not.
+`_flag:bool`: Whether the token is burnable or not.
 
 ## Events
-### `TransferableSet(bool _flag)`
+### TransferableSet
 Triggered when the transferable flag is set.
-
 `_flag`: The new value of the transferable flag.
 
 
@@ -101,24 +100,26 @@ This contract is a factory for creating proxy instances of the ReputationToken c
 
 ## Methods
 
-### `initialize(address _owner)`
+### initialize
 Initializer for the ReputationTokenFactory contract.
-- `_owner`: Owner of the factory contract.
+- `_owner:address`: Owner of the factory contract.
 
-### `createToken(string memory _name, string memory _symbol, uint8 _decimals, bool _transferable, bool _burnable)`
+### createToken
 Allows anyone to create new instances of the ReputationToken contract. It takes in the following parameters:
-- `_name`: The name of the token
-- `_symbol`: The symbol of the token
-- `_decimals`: The number of decimals of the token
-- `_transferable`: A boolean that determines whether the token is transferable or not
-- `_burnable`: A boolean that determines whether the token is burnable or not
+- `_name:string`: The name of the token
+- `_symbol:string`: The symbol of the token
+- `_decimals:uint256`: The number of decimals of the token
+- `_transferable:bool`: A boolean that determines whether the token is transferable or not
+- `_burnable:bool`: A boolean that determines whether the token is burnable or not
 
-### `updateTokenImplementation(address _tokenImplementation)`
+### updateTokenImplementation
 Updates the implementation contract for future token creations.
-- `_tokenImplementation`: Address of the new implementation.
+- `_tokenImplementation:address`: Address of the new implementation.
 ## Events
-### `event TokenCreated(address _token)`
+### event TokenCreated(address _token)
 Triggered when a new instance of the ReputationToken contract is deployed.
+- `_token:address`: Address of the created token.
 
-### `event TokenImplementationUpdated(address indexed tokenImplementation`
+### event TokenImplementationUpdated
 Triggered when the implementation is updated.
+- `_tokenImplementation: address`: Address of the new token implementation contract.
